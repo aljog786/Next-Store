@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Tailwind CSS v4 design tokens using your palette */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand palette */
+  --color-brand-cyan: #00FFFF;   /* cyan */
+  --color-brand-azure: #00AEFF;  /* blue */
+  --color-brand-mint: #00DE94;   /* mint */
+  --color-brand-lime: #00FF52;   /* lime */
+
+  /* Semantic aliases */
+  --color-primary: var(--color-brand-azure);
+  --color-primary-foreground: #001524;
+  --color-secondary: var(--color-brand-mint);
+  --color-accent: var(--color-brand-lime);
+  --color-info: var(--color-brand-cyan);
+
+  /* Surfaces */
+  --color-bg: #0a0f12;
+  --color-bg-muted: #0f1519;
+  --color-fg: #e6f6ff;
+  --color-fg-muted: #b7d4e6;
+
+  /* Radii, shadows, spacing tokens */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --shadow-soft: 0 4px 16px rgb(0 174 255 / 0.15), 0 1px 0 rgb(0 255 82 / 0.15) inset;
+  --shadow-strong: 0 12px 40px rgb(0 174 255 / 0.25), 0 2px 0 rgb(0 255 82 / 0.2) inset;
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--color-brand-azure) 0%, var(--color-brand-cyan) 35%, var(--color-brand-mint) 70%, var(--color-brand-lime) 100%);
+  --gradient-surface: linear-gradient(180deg, rgb(0 174 255 / 0.10), rgb(0 255 82 / 0.05));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global app theming */
+:root {
+  color-scheme: dark;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html, body {
+  background: radial-gradient(1200px 800px at 10% -10%, rgb(0 174 255 / 0.15), transparent 60%),
+              radial-gradient(1000px 700px at 110% 0%, rgb(0 255 82 / 0.12), transparent 55%),
+              var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* Reusable component utilities (Tailwind v4 allows author utilities here) */
+@utility btn-base {
+  @apply inline-flex items-center gap-2 rounded-[var(--radius-sm)] px-4 py-2 font-medium transition-all duration-200;
+}
+
+@utility btn-primary {
+  @apply btn-base text-black shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-strong)] hover:-translate-y-[1px] active:translate-y-0;
+  background: var(--gradient-brand);
+}
+
+@utility btn-ghost {
+  @apply btn-base text-[color:var(--color-fg)] border border-white/10 hover:border-white/20 bg-white/0 hover:bg-white/5;
+}
+
+@utility surface-card {
+  @apply rounded-[var(--radius-md)] p-4 md:p-6 border border-white/10 backdrop-blur;
+  background: var(--gradient-surface);
+}
+
+@utility gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility chip {
+  @apply inline-flex items-center rounded-[var(--radius-xs)] px-2 py-1 text-xs font-semibold border border-white/10 text-[color:var(--color-fg-muted)];
+  background: linear-gradient(180deg, rgb(0 174 255 / 0.10), rgb(0 255 82 / 0.08));
+}
+
+/* Accessibility improvements */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-azure);
+  outline-offset: 2px;
+}
+
+/* Container utility for consistent responsive spacing */
+.app-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 80rem; /* ~1280px */
 }

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import Providers from "@/providers/Providers";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -19,11 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${quicksand.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        {children}
+      <body className={`${quicksand.variable} antialiased`} suppressHydrationWarning>
+        <Providers>
+          <Header />
+          <main className="app-container py-6">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
